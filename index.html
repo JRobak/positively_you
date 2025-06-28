@@ -1,13 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Positively You</title>
-  <link rel="stylesheet" href="main.css">
-  <script src="main.js" defer></script>
-</head>
-<body>
-  <h1>Welcome to Positively You</h1>
-  <p>Your one-stop resource for affirmations, goals, and growth.</p>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Positively You: A hub for growth, empowerment, and positivity"
+    />
+    <title>Positively You</title>
+    <link rel="stylesheet" href="main.css" />
+    <script src="main.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Welcome to Positively You</h1>
+      <p>Your daily dose of growth, gratitude, and greatness.</p>
+    </header>
+
+    <main>
+      <section aria-labelledby="affirmation-title">
+        <h2 id="affirmation-title">Daily Affirmation</h2>
+        <blockquote id="affirmation">Loading today's affirmation...</blockquote>
+        <button onclick="generateAffirmation()">Show New Affirmation</button>
+      </section>
+
+      <section aria-labelledby="quote-title">
+        <h2 id="quote-title">Quote of the Day</h2>
+        <p id="quote">Inspiration coming right up...</p>
+        <button onclick="generateQuote()">New Quote</button>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Positively You. All rights reserved.</p>
+    </footer>
+  </body>
 </html>
