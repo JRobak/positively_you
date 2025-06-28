@@ -3,16 +3,23 @@ body {
   margin: 0;
   padding: 0;
   background: #f8f4ff;
-  color: #333;
+  color: #b983ff;
   line-height: 1.6;
   text-align: center;
   box-sizing: border-box;
+  font-family: "funnel-display", serif;
 }
 
 header {
-  background: linear-gradient(to right, #6a0dad, #b983ff);
-  color: white;
+  /* background: linear-gradient(to right, #6a0dad, #b983ff); */
+  background: linear-gradient(to bottom, #6a0dad, #b983ff);
+  color: gold;
   padding: 2rem 1rem;
+}
+
+header p {
+  text-decoration: underline;
+  font-size: large;
 }
 
 main {
@@ -26,7 +33,7 @@ section {
 button {
   padding: 0.6rem 1.2rem;
   background-color: #6a0dad;
-  color: white;
+  color: gold;
   border: none;
   border-radius: 5px;
   font-size: 1rem;
@@ -37,7 +44,8 @@ button:hover {
   background-color: #5c0ac4;
 }
 
-blockquote {
+blockquote,
+section p {
   font-size: 1.4rem;
   font-style: italic;
   margin: 1rem auto;
