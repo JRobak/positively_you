@@ -1,30 +1,56 @@
-const affirmations = [
-  "I am growing and becoming stronger every day.",
-  "I radiate positivity and attract great things.",
-  "I am capable, confident, and kind.",
-  "I choose to speak words of healing and hope.",
-  "I am aligned with my purpose and my power.",
-  "I am worthy of love, success, and happiness.",
-  "I trust myself to make the best decision for me.",
-  "My potential is limitless when I believe in myself.",
-  "I release fear and embrace faith in every step.",
-  "I deserve to take up space and use my voice.",
-  "My journey is unfolding with purpose and power.",
-  "I welcome abundance and prosperity into my life.",
-  "I give myself permission to grow and evolve.",
-  "I am grounded, focused, and fully present.",
-  "I choose progress over perfection.",
-  "Every challenge I face is an opportunity to grow.",
-  "I am resilient, resourceful, and relentless.",
-  "Peace begins with me and flows from me.",
-  "I am proud of how far I’ve come and excited for what’s next.",
-  "I attract opportunities that align with my goals.",
-  "I am not defined by my past — I am creating my future.",
-  "I carry myself with confidence, grace, and courage.",
-  "I am constantly becoming a better version of myself.",
-  "I honor my values and live with integrity.",
-  "I am a magnet for joy, creativity, and strength.",
-];
+// ✅ Affirmations grouped by category
+const categorizedAffirmations = {
+  Confidence: [
+    "I believe in myself and my abilities.",
+    "I radiate self-respect and inner strength.",
+    "I am worthy of success and happiness.",
+    "I trust myself to make the right decisions.",
+    "I handle challenges with grace and confidence.",
+    "I am proud of who I am becoming.",
+    "My confidence grows stronger every day.",
+    "I speak with clarity and conviction.",
+    "I release doubt and welcome courage.",
+    "I am enough just as I am.",
+  ],
+  Health: [
+    "My body is strong, capable, and healing every day.",
+    "I make healthy choices with ease and joy.",
+    "I am grateful for my healthy body, mind, and spirit.",
+    "I listen to my body and give it what it needs.",
+    "Every cell in my body vibrates with health.",
+    "I nourish my body with love and respect.",
+    "I am energized, refreshed, and rejuvenated.",
+    "My immune system is powerful and protective.",
+    "I release stress and invite calm.",
+    "I honor my body with rest and movement.",
+  ],
+  Wealth: [
+    "I attract wealth and abundance effortlessly.",
+    "Money flows to me from many sources.",
+    "I am financially free and secure.",
+    "My income is constantly increasing.",
+    "I deserve to be well-compensated for my skills.",
+    "Abundance surrounds me at all times.",
+    "I welcome new opportunities for financial growth.",
+    "I manage my money wisely and with gratitude.",
+    "My wealth creates a positive impact.",
+    "I release scarcity and embrace prosperity.",
+  ],
+  Spirituality: [
+    "I trust the universe is guiding me perfectly.",
+    "I am aligned with my highest purpose.",
+    "My spirit is grounded, peaceful, and full of love.",
+    "I am connected to a source greater than myself.",
+    "I trust the timing of my life.",
+    "I listen to my inner voice with clarity.",
+    "Peace flows through me like a gentle river.",
+    "I am a divine being having a human experience.",
+    "Gratitude is my spiritual practice.",
+    "I radiate love, compassion, and understanding.",
+  ],
+};
+
+const affirmations = Object.values(categorizedAffirmations).flat();
 
 const quotes = [
   "“Believe you can and you're halfway there.” – Theodore Roosevelt",
@@ -39,7 +65,6 @@ const quotes = [
   "“Don’t watch the clock; do what it does. Keep going.” – Sam Levenson",
   "“Doubt kills more dreams than failure ever will.” – Suzy Kassem",
   "“Whether you think you can or you think you can’t, you’re right.” – Henry Ford",
-  "“What lies behind us and what lies before us are tiny matters compared to what lies within us.” – Ralph Waldo Emerson",
   "“It always seems impossible until it’s done.” – Nelson Mandela",
   "“Start where you are. Use what you have. Do what you can.” – Arthur Ashe",
   "“Happiness is not something ready made. It comes from your own actions.” – Dalai Lama",
@@ -47,24 +72,137 @@ const quotes = [
   "“Your life does not get better by chance, it gets better by change.” – Jim Rohn",
   "“You are never too old to set another goal or to dream a new dream.” – C.S. Lewis",
   "“Opportunities don't happen. You create them.” – Chris Grosser",
-  "“Believe in yourself and all that you are.” – Christian D. Larson",
   "“Discipline is the bridge between goals and accomplishment.” – Jim Rohn",
-  "“Success usually comes to those who are too busy to be looking for it.” – Henry David Thoreau",
-  "“The best revenge is massive success.” – Frank Sinatra",
-  "“What you get by achieving your goals is not as important as what you become by achieving your goals.” – Zig Ziglar",
 ];
 
-function generateAffirmation() {
-  const affirmation =
-    affirmations[Math.floor(Math.random() * affirmations.length)];
-  document.getElementById("affirmation").textContent = affirmation;
+// ✅ Utility function
+function getRandomItem(array) {
+  return array[Math.floor(Math.random() * array.length)];
 }
 
-function generateQuote() {
-  const quote = quotes[Math.floor(Math.random() * quotes.length)];
-  document.getElementById("quote").textContent = quote;
+// ✅ Render categorized affirmations with teaser and show more/less toggle
+function renderCategoryContent(containerId, data) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  for (const category in data) {
+    const items = data[category];
+    const details = document.createElement("details");
+    const summary = document.createElement("summary");
+    summary.textContent = `${category} – “${items[0]}”`;
+    details.appendChild(summary);
+
+    const section = document.createElement("section");
+    const firstFive = items.slice(0, 5);
+
+    function renderBatch(batch, toggleBack = false) {
+      section.innerHTML = "";
+      batch.forEach((item) => {
+        const block = document.createElement("blockquote");
+        block.textContent = item;
+        section.appendChild(block);
+      });
+
+      if (!toggleBack && items.length > 5) {
+        const showMoreBtn = document.createElement("button");
+        showMoreBtn.textContent = "Show More";
+        showMoreBtn.style.margin = "1rem auto";
+        showMoreBtn.style.display = "block";
+
+        showMoreBtn.addEventListener("click", () => {
+          renderBatch(items.slice(5), true);
+        });
+
+        section.appendChild(showMoreBtn);
+      } else if (toggleBack) {
+        const showLessBtn = document.createElement("button");
+        showLessBtn.textContent = "Show Less";
+        showLessBtn.style.margin = "1rem auto";
+        showLessBtn.style.display = "block";
+
+        showLessBtn.addEventListener("click", () => {
+          renderBatch(firstFive);
+        });
+
+        section.appendChild(showLessBtn);
+      }
+    }
+
+    renderBatch(firstFive);
+    details.appendChild(section);
+    container.appendChild(details);
+  }
 }
 
-// Show one of each on load
-generateAffirmation();
-generateQuote();
+// ✅ Render uncategorized quotes using the same logic
+function renderQuotes(containerId, quotesArray) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  const details = document.createElement("details");
+  const summary = document.createElement("summary");
+  summary.textContent = `Quotes – “${quotesArray[0]}”`;
+  details.appendChild(summary);
+
+  const section = document.createElement("section");
+  let currentIndex = 0;
+  const itemsPerPage = 5;
+
+  function renderPage(startIndex) {
+    section.innerHTML = "";
+    const endIndex = startIndex + itemsPerPage;
+    const batch = quotesArray.slice(startIndex, endIndex);
+
+    batch.forEach((quote) => {
+      const block = document.createElement("blockquote");
+      block.textContent = quote;
+      section.appendChild(block);
+    });
+
+    // Navigation buttons
+    if (endIndex < quotesArray.length) {
+      const showMoreBtn = document.createElement("button");
+      showMoreBtn.textContent = "Show More";
+      showMoreBtn.style.margin = "1rem auto";
+      showMoreBtn.style.display = "block";
+      showMoreBtn.addEventListener("click", () => {
+        currentIndex = endIndex;
+        renderPage(currentIndex);
+      });
+      section.appendChild(showMoreBtn);
+    }
+
+    if (startIndex > 0) {
+      const showLessBtn = document.createElement("button");
+      showLessBtn.textContent = "Show Less";
+      showLessBtn.style.margin = "1rem auto";
+      showLessBtn.style.display = "block";
+      showLessBtn.addEventListener("click", () => {
+        currentIndex = 0;
+        renderPage(currentIndex);
+      });
+      section.appendChild(showLessBtn);
+    }
+  }
+
+  renderPage(currentIndex);
+  details.appendChild(section);
+  container.appendChild(details);
+}
+
+// ✅ Run on page load
+document.addEventListener("DOMContentLoaded", () => {
+  const quoteEl = document.getElementById("daily-quote");
+  const affirmationEl = document.getElementById("daily-affirmation");
+
+  if (quoteEl) {
+    quoteEl.textContent = getRandomItem(quotes);
+  }
+
+  if (affirmationEl) {
+    affirmationEl.textContent = getRandomItem(affirmations);
+  }
+
+  renderCategoryContent("all-affirmations", categorizedAffirmations);
+  renderQuotes("all-quotes", quotes);
+});

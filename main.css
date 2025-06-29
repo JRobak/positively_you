@@ -1,25 +1,38 @@
 body {
-  font-family: "Segoe UI", sans-serif;
   margin: 0;
   padding: 0;
+  font-family: "Segoe UI", sans-serif;
   background: #f8f4ff;
   color: #b983ff;
   line-height: 1.6;
   text-align: center;
   box-sizing: border-box;
-  font-family: "funnel-display", serif;
 }
 
 header {
-  /* background: linear-gradient(to right, #6a0dad, #b983ff); */
   background: linear-gradient(to bottom, #6a0dad, #b983ff);
   color: gold;
   padding: 2rem 1rem;
 }
 
-header p {
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: gold;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a[aria-current="page"] {
   text-decoration: underline;
-  font-size: large;
 }
 
 main {
@@ -30,31 +43,54 @@ section {
   margin-bottom: 2.5rem;
 }
 
-button {
-  padding: 0.6rem 1.2rem;
-  background-color: #6a0dad;
-  color: gold;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #5c0ac4;
-}
-
-blockquote,
-section p {
-  font-size: 1.4rem;
+blockquote {
   font-style: italic;
+  background-color: #ffffffcc;
+  padding: 1rem;
   margin: 1rem auto;
   max-width: 600px;
+  border: 2px solid gold;
+  border-radius: 8px;
   color: #6a0dad;
 }
 
 footer {
-  background-color: #eee;
+  background-color: #6a0dad;
+  color: gold;
   padding: 1rem;
-  font-size: 0.9rem;
+}
+
+details {
+  background-color: #fff7ff;
+  border: 2px solid #b983ff;
+  border-radius: 8px;
+  margin: 1rem auto;
+  max-width: 700px;
+  padding: 0.5rem 1rem;
+  text-align: left;
+}
+
+summary {
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: #6a0dad;
+  margin-bottom: 0.5rem;
+}
+
+details[open] {
+  box-shadow: 0 0 5px rgba(186, 131, 255, 0.3);
+}
+
+/* Sticky footer container */
+.page-container {
+  min-height: 100vh; /* Full viewport height */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Make main grow to fill space */
+main {
+  flex: 1;
+  padding: 2rem 1rem;
 }

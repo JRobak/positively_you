@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Positively You - Daily affirmations and quotes."
+      content="Daily positive affirmations and themed inspiration."
     />
-    <title>Positively You</title>
+    <title>Affirmations - Positively You</title>
     <link rel="stylesheet" href="main.css" />
   </head>
   <body>
@@ -16,36 +16,35 @@
         <h1>Positively You</h1>
         <nav aria-label="Main navigation">
           <ul>
-            <li><a href="index.html" aria-current="page">Home</a></li>
+            <li><a href="index.html">Home</a></li>
             <li><a href="books.html">Books</a></li>
             <li><a href="quotes.html">Quotes</a></li>
-            <li><a href="affirmations.html">Affirmations</a></li>
+            <li>
+              <a href="affirmations.html" aria-current="page">Affirmations</a>
+            </li>
             <li><a href="about.html">About</a></li>
           </ul>
         </nav>
-        <p>Your daily dose of inspiration and positivity</p>
       </header>
 
       <main>
-        <section>
-          <h2>Daily Affirmation</h2>
-          <blockquote id="daily-affirmation" role="region" aria-live="polite">
-            Loading affirmation...
-          </blockquote>
-        </section>
+        <h2>Daily Affirmation</h2>
+        <blockquote id="daily-affirmation" role="region" aria-live="polite">
+          Loading affirmation...
+        </blockquote>
 
-        <section>
-          <h2>Daily Quote</h2>
-          <blockquote id="daily-quote" role="region" aria-live="polite">
-            Loading quote...
-          </blockquote>
-        </section>
+        <h2>Affirmations by Theme</h2>
+        <p>
+          Select an affirmation category to explore inspiration by focus area.
+        </p>
+        <div id="all-affirmations" role="region" aria-live="polite"></div>
       </main>
 
       <footer>
         <p>&copy; 2025 Positively You</p>
       </footer>
     </div>
+
     <script src="main.js"></script>
   </body>
 </html>
