@@ -206,3 +206,8 @@ document.addEventListener("DOMContentLoaded", () => {
   renderCategoryContent("all-affirmations", categorizedAffirmations);
   renderQuotes("all-quotes", quotes);
 });
+
+function handleSubmit(e) {
+  e.preventDefault();
+  document.getElementById("success-msg").style.display = "block";
+}

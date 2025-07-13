@@ -94,3 +94,7 @@ main {
   flex: 1;
   padding: 2rem 1rem;
 }
+
+.contact {
+  border: solid thin black;
+}

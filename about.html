@@ -23,13 +23,50 @@
       </header>
 
       <main>
-        <section>
-          <h2>About This Site</h2>
-          <p>
-            Positively You is a personal project designed to share daily
-            inspiration, positive affirmations, and meaningful books that
-            promote growth and empowerment.
-          </p>
+        <section aria-labelledby="bio-table-title">
+          <h2 id="bio-table-title">Quick Facts</h2>
+          <table>
+            <caption>
+              About the Creator
+            </caption>
+            <thead>
+              <tr>
+                <th>Fact</th>
+                <th>Detail</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Passion</td>
+                <td>Empowering others through mindset and self-talk</td>
+              </tr>
+              <tr>
+                <td>Favorite Quote</td>
+                <td>
+                  “Whether you think you can or think you can’t, you’re right.”
+                </td>
+              </tr>
+              <tr>
+                <td>Hobbies</td>
+                <td>Reading, journaling, building affirmations</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="contact">
+          <form id="feedback-form" onsubmit="handleSubmit(event)">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required />
+
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea>
+
+            <button type="submit">Send</button>
+            <p id="success-msg" role="alert" style="display: none">
+              Thank you! We'll be in touch.
+            </p>
+          </form>
         </section>
       </main>
 
