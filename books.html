@@ -3,48 +3,150 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Books page of Positively You site." />
-    <title>Books - Positively You</title>
+    <meta
+      name="description"
+      content="Discover inspirational books that encourage personal growth, mindfulness and self‑belief."
+    />
+    <meta
+      name="keywords"
+      content="positive affirmations, inspirational books, self-help, personal development, motivation"
+    />
+    <title>Recommended Books | Positively You</title>
     <link rel="stylesheet" href="main.css" />
   </head>
   <body>
     <div class="page-container">
       <header>
-        <h1>Positively You</h1>
-        <nav aria-label="Main navigation">
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="books.html" aria-current="page">Books</a></li>
-            <li><a href="quotes.html">Quotes</a></li>
-            <li><a href="affirmations.html">Affirmations</a></li>
-            <li><a href="about.html">About</a></li>
-          </ul>
-        </nav>
+        <div class="header-inner">
+          <a href="index.html" class="logo-link">
+            <img
+              src="/images/logo.png"
+              alt="Positively You swirl logo"
+              class="logo-img"
+            />
+          </a>
+          <h1>Positively You</h1>
+          <nav aria-label="Main navigation">
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="books.html" aria-current="page">Books</a></li>
+              <li><a href="quotes.html">Quotes</a></li>
+              <li><a href="affirmations.html">Affirmations</a></li>
+              <li><a href="about.html">About</a></li>
+            </ul>
+          </nav>
+        </div>
       </header>
 
+      <!-- Small hero section for the books page. Inline style is used to set the
+           decorative background image unique to this page. -->
+      <section
+        class="hero small-hero"
+        style="background-image: url('books-hero.png')"
+      >
+        <div class="hero-content">
+          <h2>Recommended reads</h2>
+          <p>Explore books that inspire self‑growth and positive living.</p>
+        </div>
+      </section>
+
       <main>
-        <section>
-          <h2>Recommended Books</h2>
+        <!-- Search form for discovering new inspirational titles via the
+             Google Books API. Users can enter a keyword and load fresh
+             recommendations. -->
+        <section aria-labelledby="book-search-title">
+          <h2 id="book-search-title">Find more inspiration</h2>
+          <form id="book-search-form">
+            <label for="book-query">Search for a book</label>
+            <input
+              type="text"
+              id="book-query"
+              name="query"
+              placeholder="e.g. mindfulness, gratitude"
+            />
+            <button type="submit">Search</button>
+          </form>
+          <!-- Results from the book API will appear here. -->
+          <div id="book-results" role="region" aria-live="polite"></div>
+        </section>
+
+        <section aria-labelledby="book-list-title">
+          <h2 id="book-list-title">Our favourite books</h2>
+          <!-- Unordered list of books. Each title links to an external
+               resource. Including descriptive anchor text helps SEO and
+               accessibility. -->
+          <ul class="book-list">
+            <li>
+              <strong>You Are a Badass</strong> by Jen Sincero –
+              <a
+                href="https://www.goodreads.com/book/show/15843166-you-are-a-badass"
+                target="_blank"
+                rel="noopener"
+                >Read on Goodreads</a
+              >
+            </li>
+            <li>
+              <strong>The Power of Now</strong> by Eckhart Tolle –
+              <a
+                href="https://www.goodreads.com/book/show/6708.The_Power_of_Now"
+                target="_blank"
+                rel="noopener"
+                >Read on Goodreads</a
+              >
+            </li>
+            <li>
+              <strong>The Four Agreements</strong> by Don Miguel Ruiz –
+              <a
+                href="https://www.goodreads.com/book/show/6596.The_Four_Agreements"
+                target="_blank"
+                rel="noopener"
+                >Read on Goodreads</a
+              >
+            </li>
+          </ul>
           <p>
-            This page will feature inspirational books using the Google Books
-            API.
+            These titles delve into personal growth, mindfulness and
+            self‑belief—perfect companions on your journey to positivity.
           </p>
-          <div id="books-container" role="region" aria-live="polite">
-            <section aria-labelledby="book-title">
-              <h2 id="book-title">Recommended Reads</h2>
-              <ul>
-                <li>You Are a Badass – Jen Sincero</li>
-                <li>The Power of Now – Eckhart Tolle</li>
-                <li>The Four Agreements – Don Miguel Ruiz</li>
-              </ul>
-            </section>
-            
-          </div>
         </section>
       </main>
 
+      <section class="cta">
+        <h2>Have a favourite inspirational book?</h2>
+        <p>We love discovering new reads! Share your recommendation with us.</p>
+        <a href="about.html#contact" class="button">Send a suggestion</a>
+      </section>
+
       <footer>
-        <p>&copy; 2025 Positively You</p>
+        <nav aria-label="Footer navigation">
+          <ul>
+            <li>
+              <a
+                href="https://www.psychologytoday.com/us/basics/positive-thinking"
+                target="_blank"
+                rel="noopener"
+                >Positive thinking basics</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.mayoclinic.org/healthy-lifestyle/stress-management/in-depth/positive-thinking/art-20043950"
+                target="_blank"
+                rel="noopener"
+                >Mayo Clinic on positive thinking</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.brainyquote.com/topics/positive-quotes"
+                target="_blank"
+                rel="noopener"
+                >Inspirational quotes collection</a
+              >
+            </li>
+          </ul>
+        </nav>
+        <p>&copy; 2025 Positively You</p>
       </footer>
     </div>
     <script src="main.js"></script>

@@ -3,47 +3,128 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--
+      The description meta tag provides search engines with a succinct summary of
+      what this page offers. Including your primary keyword here helps with SEO.
+    -->
     <meta
       name="description"
-      content="Positively You - Daily affirmations and quotes."
+      content="Positively You provides daily affirmations, inspirational quotes and recommended reads to uplift your mindset."
     />
-    <title>Positively You</title>
+    <!--
+      Including relevant keywords can help search engines understand the
+      focus of your website. While not heavily weighted, adding a keyword
+      meta tag offers additional context.
+    -->
+    <meta
+      name="keywords"
+      content="positive affirmations, inspirational quotes, self-help books, personal development, motivation"
+    />
+    <title>Positively You | Daily Inspiration</title>
     <link rel="stylesheet" href="main.css" />
   </head>
   <body>
     <div class="page-container">
+      <!-- Site header with logo and global navigation. The logo links back to the
+           home page and the navigation is consistent across all pages to help
+           visitors orient themselves. -->
       <header>
-        <h1>Positively You</h1>
-        <nav aria-label="Main navigation">
-          <ul>
-            <li><a href="index.html" aria-current="page">Home</a></li>
-            <li><a href="books.html">Books</a></li>
-            <li><a href="quotes.html">Quotes</a></li>
-            <li><a href="affirmations.html">Affirmations</a></li>
-            <li><a href="about.html">About</a></li>
-          </ul>
-        </nav>
-        <p>Your daily dose of inspiration and positivity</p>
+        <div class="header-inner">
+          <a href="index.html" class="logo-link">
+            <img
+              src="/images/logo.png"
+              alt="Positively You swirl logo"
+              class="logo-img"
+            />
+          </a>
+          <h1>Positively You</h1>
+          <nav aria-label="Main navigation">
+            <ul>
+              <li><a href="index.html" aria-current="page">Home</a></li>
+              <li><a href="books.html">Books</a></li>
+              <li><a href="quotes.html">Quotes</a></li>
+              <li><a href="affirmations.html">Affirmations</a></li>
+              <li><a href="about.html">About</a></li>
+            </ul>
+          </nav>
+        </div>
       </header>
+
+      <!-- Hero section with a background image and call‑to‑action. The
+           decorative image conveys warmth and optimism without depicting any
+           specific real‑world subject. -->
+      <section class="hero" style="background-image: url('hero.png')">
+        <div class="hero-content">
+          <h2>Your daily dose of inspiration and positivity</h2>
+          <p>
+            Start each day with uplifting affirmations, encouraging quotes and
+            empowering books.
+          </p>
+          <a href="quotes.html" class="button">Get inspired</a>
+        </div>
+      </section>
 
       <main>
         <section>
-          <h2>Daily Affirmation</h2>
+          <h2>Daily affirmation</h2>
+          <!-- The blockquote is updated at runtime via JavaScript. The aria-live
+               attribute announces changes for screen‑reader users. -->
           <blockquote id="daily-affirmation" role="region" aria-live="polite">
-            Loading affirmation...
+            Loading affirmation…
           </blockquote>
         </section>
 
         <section>
-          <h2>Daily Quote</h2>
+          <h2>Daily quote</h2>
           <blockquote id="daily-quote" role="region" aria-live="polite">
-            Loading quote...
+            Loading quote…
           </blockquote>
         </section>
       </main>
 
+      <!-- Site‑wide call to action encouraging visitors to explore further. -->
+      <section class="cta">
+        <h2>Ready to transform your mindset?</h2>
+        <p>
+          Discover affirmations, quotes and books tailored to empower you every
+          day.
+        </p>
+        <a href="affirmations.html" class="button">Explore affirmations</a>
+      </section>
+
       <footer>
-        <p>&copy; 2025 Positively You</p>
+        <nav aria-label="Footer navigation">
+          <ul>
+            <!-- External resources offer additional reading about positive
+                 psychology. These links open in a new tab and use clear anchor
+                 text. -->
+            <li>
+              <a
+                href="https://www.psychologytoday.com/us/basics/positive-thinking"
+                target="_blank"
+                rel="noopener"
+                >Positive thinking basics</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.mayoclinic.org/healthy-lifestyle/stress-management/in-depth/positive-thinking/art-20043950"
+                target="_blank"
+                rel="noopener"
+                >Mayo Clinic on positive thinking</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.brainyquote.com/topics/positive-quotes"
+                target="_blank"
+                rel="noopener"
+                >Inspirational quotes collection</a
+              >
+            </li>
+          </ul>
+        </nav>
+        <p>&copy; 2025 Positively You</p>
       </footer>
     </div>
     <script src="main.js"></script>

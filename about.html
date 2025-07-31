@@ -3,64 +3,123 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="About the Positively You project." />
-    <title>About - Positively You</title>
+    <meta
+      name="description"
+      content="Learn about the mission of Positively You and connect with the creator behind the site."
+    />
+    <meta
+      name="keywords"
+      content="about Positively You, mission, positive affirmations, self-improvement, contact"
+    />
+    <title>About Us | Positively You</title>
     <link rel="stylesheet" href="main.css" />
   </head>
   <body>
     <div class="page-container">
       <header>
-        <h1>Positively You</h1>
-        <nav aria-label="Main navigation">
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="books.html">Books</a></li>
-            <li><a href="quotes.html">Quotes</a></li>
-            <li><a href="affirmations.html">Affirmations</a></li>
-            <li><a href="about.html" aria-current="page">About</a></li>
-          </ul>
-        </nav>
+        <div class="header-inner">
+          <a href="index.html" class="logo-link">
+            <img
+              src="/images/logo.png"
+              alt="Positively You swirl logo"
+              class="logo-img"
+            />
+          </a>
+          <h1>Positively You</h1>
+          <nav aria-label="Main navigation">
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="books.html">Books</a></li>
+              <li><a href="quotes.html">Quotes</a></li>
+              <li><a href="affirmations.html">Affirmations</a></li>
+              <li><a href="about.html" aria-current="page">About</a></li>
+            </ul>
+          </nav>
+        </div>
       </header>
+
+      <!-- Hero for the About page. This reuses a decorative graphic from the
+           quotes page to maintain brand consistency. -->
+      <section
+        class="hero small-hero"
+        style="background-image: url('quotes-hero.png')"
+      >
+        <div class="hero-content">
+          <h2>About Positively You</h2>
+          <p>Learn more about our mission and the creator behind the site.</p>
+        </div>
+      </section>
 
       <main>
         <section aria-labelledby="bio-table-title">
-          <h2 id="bio-table-title">Quick Facts</h2>
+          <h2 id="bio-table-title">Quick facts</h2>
+          <!-- A semantic table summarising details about the creator. A caption
+               introduces the table and each cell uses proper header elements. -->
           <table>
             <caption>
-              About the Creator
+              About the creator
             </caption>
             <thead>
               <tr>
-                <th>Fact</th>
-                <th>Detail</th>
+                <th scope="col">Fact</th>
+                <th scope="col">Detail</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Passion</td>
-                <td>Empowering others through mindset and self-talk</td>
+                <th scope="row">Passion</th>
+                <td>Empowering others through mindset and self‑talk</td>
               </tr>
               <tr>
-                <td>Favorite Quote</td>
+                <th scope="row">Favourite quote</th>
                 <td>
                   “Whether you think you can or think you can’t, you’re right.”
                 </td>
               </tr>
               <tr>
-                <td>Hobbies</td>
-                <td>Reading, journaling, building affirmations</td>
+                <th scope="row">Hobbies</th>
+                <td>Reading, journalling, building affirmations</td>
               </tr>
             </tbody>
           </table>
         </section>
 
-        <section id="contact">
-          <form id="feedback-form" onsubmit="handleSubmit(event)">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required />
+        <section id="mission" aria-labelledby="mission-title">
+          <h2 id="mission-title">Our mission</h2>
+          <p>
+            Positively You was created to share the practice of positive
+            affirmations and mindset with people around the world. Our goal is
+            to uplift and empower individuals by offering carefully curated
+            quotes, books and affirmations that encourage self‑belief, gratitude
+            and resilience.
+          </p>
+        </section>
 
-            <label for="message">Message:</label>
+        <!-- Contact form allowing visitors to send feedback. Validation
+             messages are announced via aria‑live regions. -->
+        <section id="contact" aria-labelledby="contact-title">
+          <h2 id="contact-title">Get in touch</h2>
+          <!-- The form uses novalidate to disable the browser's default
+               validation UI and rely instead on the custom JavaScript
+               in main.js to display accessible error messages. -->
+          <form id="feedback-form" onsubmit="handleSubmit(event)" novalidate>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required />
+            <span
+              id="name-error"
+              class="error-message"
+              role="alert"
+              aria-live="polite"
+            ></span>
+
+            <label for="message">Message</label>
             <textarea id="message" name="message" required></textarea>
+            <span
+              id="message-error"
+              class="error-message"
+              role="alert"
+              aria-live="polite"
+            ></span>
 
             <button type="submit">Send</button>
             <p id="success-msg" role="alert" style="display: none">
@@ -70,9 +129,53 @@
         </section>
       </main>
 
+      <section class="cta">
+        <h2>Spread positivity</h2>
+        <p>
+          Connect with us on your favourite platform or send a message above and
+          join our growing community of positive thinkers.
+        </p>
+        <a
+          href="https://www.facebook.com/"
+          class="button"
+          target="_blank"
+          rel="noopener"
+          >Follow on Facebook</a
+        >
+      </section>
+
       <footer>
-        <p>&copy; 2025 Positively You</p>
+        <nav aria-label="Footer navigation">
+          <ul>
+            <li>
+              <a
+                href="https://www.psychologytoday.com/us/basics/positive-thinking"
+                target="_blank"
+                rel="noopener"
+                >Positive thinking basics</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.mayoclinic.org/healthy-lifestyle/stress-management/in-depth/positive-thinking/art-20043950"
+                target="_blank"
+                rel="noopener"
+                >Mayo Clinic on positive thinking</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.brainyquote.com/topics/positive-quotes"
+                target="_blank"
+                rel="noopener"
+                >Inspirational quotes collection</a
+              >
+            </li>
+          </ul>
+        </nav>
+        <p>&copy; 2025 Positively You</p>
       </footer>
     </div>
+    <script src="main.js"></script>
   </body>
 </html>

@@ -3,40 +3,106 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Inspirational quotes by theme." />
-    <title>Quotes - Positively You</title>
+    <meta
+      name="description"
+      content="Browse uplifting quotes to brighten your day and motivate your journey."
+    />
+    <meta
+      name="keywords"
+      content="inspirational quotes, positive thinking, motivation, self-belief, resilience"
+    />
+    <title>Inspirational Quotes | Positively You</title>
     <link rel="stylesheet" href="main.css" />
   </head>
   <body>
     <div class="page-container">
       <header>
-        <h1>Positively You</h1>
-        <nav aria-label="Main navigation">
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="books.html">Books</a></li>
-            <li><a href="quotes.html" aria-current="page">Quotes</a></li>
-            <li><a href="affirmations.html">Affirmations</a></li>
-            <li><a href="about.html">About</a></li>
-          </ul>
-        </nav>
+        <div class="header-inner">
+          <a href="index.html" class="logo-link">
+            <img
+              src="/images/logo.png"
+              alt="Positively You swirl logo"
+              class="logo-img"
+            />
+          </a>
+          <h1>Positively You</h1>
+          <nav aria-label="Main navigation">
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="books.html">Books</a></li>
+              <li><a href="quotes.html" aria-current="page">Quotes</a></li>
+              <li><a href="affirmations.html">Affirmations</a></li>
+              <li><a href="about.html">About</a></li>
+            </ul>
+          </nav>
+        </div>
       </header>
 
+      <!-- Hero image for quotes page. This graphic features soft swirls and
+           stars to convey wonder and inspiration. -->
+      <section
+        class="hero small-hero"
+        style="background-image: url('quotes-hero.png')"
+      >
+        <div class="hero-content">
+          <h2>Daily inspiration</h2>
+          <p>Uplifting quotes to brighten your day.</p>
+        </div>
+      </section>
+
       <main>
-        <h2>Daily Quote</h2>
+        <h2>Daily quote</h2>
         <blockquote id="daily-quote" role="region" aria-live="polite">
-          Loading quote...
+          Loading quote…
         </blockquote>
 
-        <h2>Quotes Library</h2>
-        <div id="all-quotes" role="region" aria-live="polite"></div>
+        <h2>Quotes library</h2>
+        <!-- A paginated list of quotes will be loaded from a public API. -->
+        <div id="quotes-container" role="region" aria-live="polite"></div>
+        <div id="quotes-pagination" class="pagination-nav"></div>
       </main>
 
+      <section class="cta">
+        <h2>Share the love</h2>
+        <p>
+          Have an uplifting quote you’d like to see here? Let us know and help
+          spread positivity!
+        </p>
+        <a href="about.html#contact" class="button">Submit a quote</a>
+      </section>
+
       <footer>
-        <p>&copy; 2025 Positively You</p>
+        <nav aria-label="Footer navigation">
+          <ul>
+            <li>
+              <a
+                href="https://www.psychologytoday.com/us/basics/positive-thinking"
+                target="_blank"
+                rel="noopener"
+                >Positive thinking basics</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.mayoclinic.org/healthy-lifestyle/stress-management/in-depth/positive-thinking/art-20043950"
+                target="_blank"
+                rel="noopener"
+                >Mayo Clinic on positive thinking</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.brainyquote.com/topics/positive-quotes"
+                target="_blank"
+                rel="noopener"
+                >Inspirational quotes collection</a
+              >
+            </li>
+          </ul>
+        </nav>
+        <p>&copy; 2025 Positively You</p>
       </footer>
     </div>
-
     <script src="main.js"></script>
   </body>
 </html>

@@ -5,46 +5,130 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Daily positive affirmations and themed inspiration."
+      content="Explore daily positive affirmations and themed inspiration to nurture confidence, health, wealth and spirituality."
     />
-    <title>Affirmations - Positively You</title>
+    <meta
+      name="keywords"
+      content="positive affirmations, confidence, health, wealth, spirituality, motivation"
+    />
+    <title>Positive affirmations | Positively You</title>
     <link rel="stylesheet" href="main.css" />
   </head>
   <body>
     <div class="page-container">
       <header>
-        <h1>Positively You</h1>
-        <nav aria-label="Main navigation">
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="books.html">Books</a></li>
-            <li><a href="quotes.html">Quotes</a></li>
-            <li>
-              <a href="affirmations.html" aria-current="page">Affirmations</a>
-            </li>
-            <li><a href="about.html">About</a></li>
-          </ul>
-        </nav>
+        <div class="header-inner">
+          <a href="index.html" class="logo-link">
+            <img
+              src="/images/logo.png"
+              alt="Positively You swirl logo"
+              class="logo-img"
+            />
+          </a>
+          <h1>Positively You</h1>
+          <nav aria-label="Main navigation">
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="books.html">Books</a></li>
+              <li><a href="quotes.html">Quotes</a></li>
+              <li>
+                <a href="affirmations.html" aria-current="page">Affirmations</a>
+              </li>
+              <li><a href="about.html">About</a></li>
+            </ul>
+          </nav>
+        </div>
       </header>
 
+      <!-- Reuse the main hero graphic to introduce the affirmations page. The
+           swirling light conveys energy and renewal. -->
+      <section
+        class="hero small-hero"
+        style="background-image: url('hero.png')"
+      >
+        <div class="hero-content">
+          <h2>Affirmations by theme</h2>
+          <p>
+            Self‑affirmations to nurture your confidence, health, wealth and
+            spirituality.
+          </p>
+        </div>
+      </section>
+
       <main>
-        <h2>Daily Affirmation</h2>
+        <h2>Daily affirmation</h2>
         <blockquote id="daily-affirmation" role="region" aria-live="polite">
-          Loading affirmation...
+          Loading affirmation…
         </blockquote>
 
-        <h2>Affirmations by Theme</h2>
+        <h2>Affirmations by category</h2>
         <p>
-          Select an affirmation category to explore inspiration by focus area.
+          Explore each theme at your own pace. Use the page numbers to view more
+          affirmations within a category.
         </p>
         <div id="all-affirmations" role="region" aria-live="polite"></div>
+
+        <!-- Provide access to a random affirmation from a public API. When
+             clicking the button, a new statement will be fetched via a CORS
+             proxy and displayed below. -->
+        <section id="random-affirmation">
+          <h2>Need a new affirmation?</h2>
+          <p>
+            Click the button below to receive an additional affirmation from our
+            external service.
+          </p>
+          <button id="fetch-affirmation-btn" class="button">
+            Get a random affirmation
+          </button>
+          <blockquote
+            id="random-affirmation-display"
+            role="region"
+            aria-live="polite"
+            style="margin-top: 1rem"
+          ></blockquote>
+        </section>
       </main>
 
+      <section class="cta">
+        <h2>Know an empowering affirmation?</h2>
+        <p>
+          Help others by sharing a phrase that has uplifted you in the past.
+        </p>
+        <a href="about.html#contact" class="button">Submit an affirmation</a>
+      </section>
+
       <footer>
-        <p>&copy; 2025 Positively You</p>
+        <nav aria-label="Footer navigation">
+          <ul>
+            <li>
+              <a
+                href="https://www.psychologytoday.com/us/basics/positive-thinking"
+                target="_blank"
+                rel="noopener"
+                >Positive thinking basics</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.mayoclinic.org/healthy-lifestyle/stress-management/in-depth/positive-thinking/art-20043950"
+                target="_blank"
+                rel="noopener"
+                >Mayo Clinic on positive thinking</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.brainyquote.com/topics/positive-quotes"
+                target="_blank"
+                rel="noopener"
+                >Inspirational quotes collection</a
+              >
+            </li>
+          </ul>
+        </nav>
+        <p>&copy; 2025 Positively You</p>
       </footer>
     </div>
-
     <script src="main.js"></script>
   </body>
 </html>
