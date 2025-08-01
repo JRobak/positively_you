@@ -87,6 +87,21 @@ const quotes = [
   "Discipline is the bridge between goals and accomplishment. – Jim Rohn",
 ];
 
+// Mapping of affirmation categories to tags used by the Quotable API.
+// These tags serve as loose proxies for the themes on the site. To minimise
+// the risk of a 400 error from the API, only common tags are used. See
+// https://github.com/lukePeavey/quotable for the list of supported tags
+// (tags such as “inspirational”, “life”, “success” and “wisdom” are known
+// to exist)【815411132378546†L350-L406】. Feel free to adjust this mapping to
+// better match the desired tone; if a mapping is not found, the API call
+// defaults to no tag filter.
+const affirmationTags = {
+  Confidence: "inspirational|courage|success",
+  Health: "happiness|life",
+  Wealth: "success|money|business",
+  Spirituality: "wisdom|spirituality|life",
+};
+
 /**
  * Search the Google Books API for books matching a query. Uses a CORS
  * proxy (AllOrigins) to avoid browser cross‑origin restrictions. The
@@ -199,35 +214,157 @@ function renderCategoryPagination(containerId, data, itemsPerPage = 5) {
 }
 
 /**
- * Initialize pagination for the quotes page. Fetches a page of quotes from
- * the Quotable API via a CORS proxy and renders both the list and
- * navigation controls. Users can move between pages by clicking the
- * numbered buttons. Each page request returns a limited number of
- * quotes and the total page count so navigation can be built.
+ * Fetch a single affirmation from the affirmations.dev API via the CORS
+ * proxy. Returns the text of the affirmation or a fallback if an error
+ * occurs. This helper is used to build dynamic lists of affirmations.
+ *
+ * @returns {Promise<string>} affirmation text
  */
-function initQuotePagination() {
+async function fetchAffirmation() {
+  const encoded = encodeURIComponent("https://www.affirmations.dev/");
+  const url = `https://api.allorigins.win/raw?url=${encoded}`;
+  try {
+    const resp = await fetch(url);
+    const data = await resp.json();
+    return data.affirmation;
+  } catch (error) {
+    console.error("fetchAffirmation error:", error);
+    return "You are worthy and capable of great things.";
+  }
+}
+
+/**
+ * Render dynamic affirmations by fetching fresh statements from the
+ * affirmations.dev API for each page and category. Categories are
+ * defined by an array of names; each page load triggers a new batch of
+ * affirmations for that category. Pagination controls re‑fetch the
+ * necessary number of items when changed.
+ *
+ * @param {string} containerId – id of the container where categories appear
+ * @param {string[]} categoryNames – list of categories to render
+ * @param {number} itemsPerPage – number of affirmations per page
+ */
+function renderDynamicAffirmations(
+  containerId,
+  categoryNames,
+  itemsPerPage = 5
+) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = "";
+  categoryNames.forEach((cat) => {
+    const wrapper = document.createElement("div");
+    wrapper.className = "pagination-category";
+    const heading = document.createElement("h3");
+    heading.textContent = cat;
+    wrapper.appendChild(heading);
+    const listEl = document.createElement("div");
+    wrapper.appendChild(listEl);
+    const nav = document.createElement("div");
+    nav.className = "pagination-nav";
+    wrapper.appendChild(nav);
+    let currentPage = 1;
+    const totalPages = 2; // Provide two pages for demonstration. More pages can be added.
+    async function loadPage(page) {
+      currentPage = page;
+      listEl.innerHTML = "Loading…";
+      // Fetch a batch of affirmations concurrently
+      try {
+        const affirmations = await Promise.all(
+          Array.from({ length: itemsPerPage }, () => fetchAffirmation())
+        );
+        listEl.innerHTML = "";
+        affirmations.forEach((text) => {
+          const block = document.createElement("blockquote");
+          block.textContent = text;
+          listEl.appendChild(block);
+        });
+      } catch (error) {
+        listEl.textContent = "Could not load affirmations.";
+      }
+      // Render page controls
+      nav.innerHTML = "";
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.textContent = i;
+        btn.className = "page-btn";
+        if (i === currentPage) btn.disabled = true;
+        btn.addEventListener("click", () => loadPage(i));
+        nav.appendChild(btn);
+      }
+    }
+    loadPage(1);
+    container.appendChild(wrapper);
+  });
+}
+
+/**
+ * Fetch a number of random inspirational quotes from the ZenQuotes API. To
+ * avoid CORS issues, each request is proxied through api.allorigins.win.
+ * The ZenQuotes `random` endpoint returns a single quote in an array, so
+ * multiple calls are needed to construct a batch. If any request fails,
+ * a fallback message is used.
+ *
+ * @param {number} count – how many quotes to fetch
+ * @returns {Promise<string[]>} an array of formatted quote strings
+ */
+async function fetchZenQuotes(count) {
+  /*
+   * Fetch a batch of quotes from the ZenQuotes API. The API supports a
+   * `count` query parameter which returns an array of that length. Using a
+   * single request instead of multiple individual calls reduces the chance of
+   * encountering rate limits or 400 errors. A CORS proxy is used to
+   * circumvent browser cross‑origin restrictions.
+   * See https://docs.zenquotes.io/zenquotes-documentation/#how-to-fetch-quotes
+   */
+  try {
+    const endpoint = `https://zenquotes.io/api/random?count=${count}`;
+    const encoded = encodeURIComponent(endpoint);
+    const url = `https://api.allorigins.win/raw?url=${encoded}`;
+    const resp = await fetch(url);
+    const data = await resp.json();
+    // The response is an array of objects with properties q (quote) and a (author)
+    if (Array.isArray(data)) {
+      return data.map((entry) => `${entry.q} – ${entry.a}`);
+    }
+    // Fallback: if data is not an array, attempt to construct a single quote
+    if (data && data.q && data.a) {
+      return [`${data.q} – ${data.a}`];
+    }
+    return ["Stay positive and keep believing in yourself."];
+  } catch (error) {
+    console.error("fetchZenQuotes error:", error);
+    // Return a fallback array of motivational phrases
+    return Array.from({ length: count }, () =>
+      "Stay positive and keep believing in yourself."
+    );
+  }
+}
+
+/**
+ * Initialize pagination for the quotes page using the ZenQuotes API. Each
+ * page fetches a fresh batch of random quotes. Because ZenQuotes imposes
+ * a rate limit of 5 requests per 30 seconds, the number of pages is kept
+ * low and the calls are staggered when possible. Navigation controls
+ * allow the user to switch pages without reloading the entire document.
+ */
+function initZenQuotePagination() {
   const listEl = document.getElementById("quotes-container");
   const navEl = document.getElementById("quotes-pagination");
   if (!listEl || !navEl) return;
   const itemsPerPage = 5;
+  const totalPages = 2; // Provide two pages of quotes to stay within rate limits
   async function loadPage(page) {
     listEl.textContent = "Loading quotes...";
-    const encoded = encodeURIComponent(
-      `https://api.quotable.io/quotes?page=${page}&limit=${itemsPerPage}&tags=inspirational|motivational`
-    );
-    const url = `https://api.allorigins.win/raw?url=${encoded}`;
     try {
-      const resp = await fetch(url);
-      const data = await resp.json();
+      const quotesBatch = await fetchZenQuotes(itemsPerPage);
       listEl.innerHTML = "";
-      console.log("data: ", resp);
-      data.results.forEach((item) => {
+      quotesBatch.forEach((text) => {
         const block = document.createElement("blockquote");
-        block.textContent = `${item.content} – ${item.author}`;
+        block.textContent = text;
         listEl.appendChild(block);
       });
       // Build pagination
-      const totalPages = data.totalPages || 1;
       navEl.innerHTML = "";
       for (let i = 1; i <= totalPages; i++) {
         const btn = document.createElement("button");
@@ -238,12 +375,12 @@ function initQuotePagination() {
         navEl.appendChild(btn);
       }
     } catch (error) {
-      console.error("Quote API error:", error);
+      console.error("ZenQuotes pagination error:", error);
       listEl.textContent =
         "An error occurred while loading quotes. Please try again later.";
     }
   }
-  // Load the first page on initialisation
+  // Fetch the first page on initialisation
   loadPage(1);
 }
 
@@ -256,7 +393,9 @@ async function fetchRandomAffirmation() {
   const displayEl = document.getElementById("random-affirmation-display");
   if (!displayEl) return;
   displayEl.textContent = "Loading...";
-  const encoded = encodeURIComponent("https://www.affirmations.dev/");
+  const encoded = encodeURIComponent(
+    "https://www.affirmations.dev/"
+  );
   const url = `https://api.allorigins.win/raw?url=${encoded}`;
   try {
     const resp = await fetch(url);
@@ -267,6 +406,96 @@ async function fetchRandomAffirmation() {
     displayEl.textContent =
       "Could not load an affirmation at this time. Please try again later.";
   }
+}
+
+/**
+ * Render affirmations for each category by fetching data from the Quotable
+ * API using the tags defined in affirmationTags. The function builds
+ * pagination controls to let users browse multiple pages. If the API
+ * request fails, it falls back to the locally defined categorised
+ * affirmations.
+ *
+ * @param {string} containerId – id of the parent element where lists
+ *                              should be rendered
+ * @param {Object<string,string>} tagsMapping – mapping of category to API tags
+ * @param {number} itemsPerPage – number of items to display per page
+ */
+function renderAffirmationsFromAPI(containerId, tagsMapping, itemsPerPage = 5) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = "";
+  Object.keys(tagsMapping).forEach((category) => {
+    const tags = tagsMapping[category] || "";
+    const wrapper = document.createElement("div");
+    wrapper.className = "pagination-category";
+    const heading = document.createElement("h3");
+    heading.textContent = category;
+    wrapper.appendChild(heading);
+    const listEl = document.createElement("div");
+    wrapper.appendChild(listEl);
+    const nav = document.createElement("div");
+    nav.className = "pagination-nav";
+    wrapper.appendChild(nav);
+    // Local fallback items
+    const fallback = categorizedAffirmations[category] || [];
+
+    async function loadPage(page) {
+      listEl.textContent = "Loading...";
+      // Build API URL. Use tags only if defined. The Quotable API uses
+      // pipe-separated tags to include multiple categories. Encoded via
+      // api.allorigins.win to bypass CORS restrictions.
+      let apiUrl = `https://api.quotable.io/quotes?page=${page}&limit=${itemsPerPage}`;
+      if (tags) apiUrl += `&tags=${encodeURIComponent(tags)}`;
+      const encoded = encodeURIComponent(apiUrl);
+      const url = `https://api.allorigins.win/raw?url=${encoded}`;
+      try {
+        const resp = await fetch(url);
+        const data = await resp.json();
+        const quotesList = data.results || [];
+        const totalPages = data.totalPages || 1;
+        // Render list
+        listEl.innerHTML = "";
+        if (quotesList.length === 0) {
+          listEl.textContent = "No affirmations found.";
+        } else {
+          quotesList.forEach((item) => {
+            const block = document.createElement("blockquote");
+            block.textContent = `${item.content} – ${item.author}`;
+            listEl.appendChild(block);
+          });
+        }
+        // Render navigation
+        nav.innerHTML = "";
+        for (let i = 1; i <= totalPages; i++) {
+          const btn = document.createElement("button");
+          btn.textContent = i;
+          btn.className = "page-btn";
+          if (i === page) btn.disabled = true;
+          btn.addEventListener("click", () => loadPage(i));
+          nav.appendChild(btn);
+        }
+      } catch (error) {
+        console.error(`Affirmations API error for ${category}:`, error);
+        // Fall back to local data if available
+        listEl.innerHTML = "";
+        if (fallback.length > 0) {
+          fallback.slice(0, itemsPerPage).forEach((text) => {
+            const block = document.createElement("blockquote");
+            block.textContent = text;
+            listEl.appendChild(block);
+          });
+          nav.innerHTML = "";
+        } else {
+          listEl.textContent =
+            "Sorry, no affirmations are available for this category.";
+          nav.innerHTML = "";
+        }
+      }
+    }
+    // Load the first page initially
+    loadPage(1);
+    container.appendChild(wrapper);
+  });
 }
 
 /**
@@ -460,13 +689,22 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-  // Render affirmations with pagination if container exists
-  if (document.getElementById("all-affirmations")) {
-    renderCategoryPagination("all-affirmations", categorizedAffirmations, 5);
+  // Render affirmations from the Quotable API if the container is present.
+  // This replaces the previous static or random content with live data
+  // retrieved based on category tags. If the API fails or no container
+  // exists, the local fallback arrays defined earlier are used.
+  const affContainer = document.getElementById("all-affirmations");
+  if (affContainer) {
+    renderAffirmationsFromAPI(
+      "all-affirmations",
+      affirmationTags,
+      5
+    );
   }
-  // Initialise quote pagination if container exists
+  // Initialise quote pagination using ZenQuotes if the container exists.
+  // Each page fetches a fresh batch of quotes via the CORS proxy.
   if (document.getElementById("quotes-container")) {
-    initQuotePagination();
+    initZenQuotePagination();
   }
   // Attach random affirmation button handler
   const randomBtn = document.getElementById("fetch-affirmation-btn");
