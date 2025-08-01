@@ -220,6 +220,7 @@ function initQuotePagination() {
       const resp = await fetch(url);
       const data = await resp.json();
       listEl.innerHTML = "";
+      console.log("data: ", resp);
       data.results.forEach((item) => {
         const block = document.createElement("blockquote");
         block.textContent = `${item.content} – ${item.author}`;
@@ -255,9 +256,7 @@ async function fetchRandomAffirmation() {
   const displayEl = document.getElementById("random-affirmation-display");
   if (!displayEl) return;
   displayEl.textContent = "Loading...";
-  const encoded = encodeURIComponent(
-    "https://www.affirmations.dev/"
-  );
+  const encoded = encodeURIComponent("https://www.affirmations.dev/");
   const url = `https://api.allorigins.win/raw?url=${encoded}`;
   try {
     const resp = await fetch(url);
